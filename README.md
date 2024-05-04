@@ -28,7 +28,7 @@ Implementation of Connect 4 game using Monte Carlo Tree Search algorithm
 >   Makefile was made in Linux environment, do it is recommended to use vscode for windows to build Makefile.
 
 **Remark** 
-> There is a bug in game, the AI(Computer) which is player two using MCTS always goes for a particular column as best move but after the column fills and game in not over, the AI tries to make move in the same column leading to a segmentation fault. Since I have less experience with the Makefilwe and Header files systems I just debugged it by creating a new files and writting the entire game in it. Looking for solutions in origin game(with bug) in Cpp folder.
+> There is a bug in game, the AI(Computer) which is player two that is using MCTS, always goes for a particular column as best move but after the column fills and game in not over, the AI tries to make move in the same column leading to a segmentation fault. Since I have less experience with the Makefilwe and Header files systems I just debugged it by creating a new files and writting the entire game in it. Looking for solutions in origin game(with bug) in Cpp folder.
 
 - To build `Game_After_bug_fixed.cpp`
   ```
