@@ -5,6 +5,7 @@
 #include <limits>
 #include <random>
 #include <chrono>
+#include <algorithm>
 
 class GameMeta {
 public:
@@ -303,6 +304,7 @@ public:
     }
 
     int best_move()  {
+
         if (root_state.game_over()) {
             return -1;
         }
@@ -368,8 +370,7 @@ void play() {
 
         state.move(user_move);
         mcts.move(user_move);
-
-        state.print();
+        // state.print();
 
         if (state.game_over()) {
             std::cout << "Player one won!\n";
