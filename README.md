@@ -34,6 +34,7 @@ Implementation of Connect 4 game using Monte Carlo Tree Search algorithm
   ```
   g++ Game_After_bug_fixed.cpp -std=c++17 -o <output_filename>
   ```
+  >Note: Can use `g++ Game_After_bug_fixed.cpp -fopenmp -std=c++17 -lstdc++ -o <output_filename>` if above command throws an error.
 - To run `Game_After_bug_fixed.cpp`
   ```
   ./<output_filename>
