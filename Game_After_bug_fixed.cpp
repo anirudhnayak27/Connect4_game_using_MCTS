@@ -211,6 +211,10 @@ public:
         deleteNodes(root);
     }
 
+    void set_max_rollouts(int max_rollouts) {
+        this->max_rollouts = max_rollouts;
+    }
+
     std::pair<Node*, ConnectState> select_node() {
     Node* node = root;
     ConnectState state = root_state;
@@ -287,11 +291,11 @@ public:
         }
     }
 
-    void search(int time_limit) {
+    void search() {
         auto start_time = std::chrono::steady_clock::now();
 
         num_rollouts = 0;
-        while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_time).count() < time_limit) {
+        while (!root_state.game_over() && num_rollouts < max_rollouts) {
             Node* node;
             ConnectState state;
             std::tie(node, state) = select_node();
@@ -351,25 +355,35 @@ private:
     Node* root;
     int num_rollouts;
     int run_time;
+    int max_rollouts = 1000000;
 };
 
 void play() {
     ConnectState state;
     MCTS mcts(state);
+    mcts.set_max_rollouts(100000);
+    std::string quit = "quit";
 
     while (!state.game_over()) {
         std::cout << "Current state:\n";
         state.print();
 
-        int user_move;
+        std::string user_move;
         std::vector<int> legal_moves = state.get_legal_moves();
         do {
-            std::cout << "Enter a move: ";
+            std::cout << "Enter a move (or 'quit' to end the game): ";
             std::cin >> user_move;
-        } while (std::find(legal_moves.begin(), legal_moves.end(), user_move) == legal_moves.end());
+        } while (user_move != quit && std::find(legal_moves.begin(), legal_moves.end(), std::stoi(user_move)) == legal_moves.end());
 
-        state.move(user_move);
-        mcts.move(user_move);
+        if (user_move == quit) {
+            std::cout << "Quitting...\n";
+            std::cout << "Player two won!\n";
+            state.print();
+            break;
+        }
+
+        state.move(std::stoi(user_move));
+        mcts.move(std::stoi(user_move));
         // state.print();
 
         if (state.game_over()) {
@@ -380,10 +394,10 @@ void play() {
 
         std::cout << "Thinking...\n";
 
-        mcts.search(8000);
+        mcts.search();
         int num_rollouts, run_time;
         std::tie(num_rollouts, run_time) = mcts.statistics();
-        std::cout << "Statistics: " << num_rollouts << " rollouts in " << run_time << " milliseconds\n";
+        std::cout << "Statistics: " << num_rollouts << " rollouts in " << mcts.statistics().second << " milliseconds\n";
         int move = mcts.best_move();
 
         std::cout << "MCTS chose move: " << move << "\n";
