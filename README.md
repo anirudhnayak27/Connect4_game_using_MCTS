@@ -1,4 +1,7 @@
 # Accelerating Decision-Making in AI: Parallelizing Monte Carlo Tree Search for Connect 4 Using CPU and GPU
+> **Note:**
+> This project has been selected for publication and is expected to be published by early next year.
+
 This repository contains the code and documentation for the research project, which explores the use of parallel computing to accelerate AI decision-making. We specifically focus on implementing and comparing the performance of Monte Carlo Tree Search (MCTS) for the Connect 4 game on both CPU and GPU platforms.
 
 ## Introduction
@@ -83,6 +86,7 @@ To assess MCTS's performance on CPUs and GPUs, we implement MCTS in three versio
 
 - GPU-based parallelization greatly improves decision speed.
 - Performance improvements are hardware-dependent, and memory bottlenecks on the GPU become apparent with high rollout counts.
+
   
 ## Contribution
 
